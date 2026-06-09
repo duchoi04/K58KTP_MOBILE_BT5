@@ -1,0 +1,108 @@
+networks:
+  monitor_net:
+    driver: bridge
+
+volumes:
+  mariadb_data:
+  influxdb_data:
+  nodered_data:
+  grafana_data:
+
+services:
+  # 1. Hệ quản trị cơ sở dữ liệu MariaDB (Lưu trạng thái hiện tại)
+  mariadb:
+    image: mariadb:10.11
+    container_name: monitor_mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "123"
+      MYSQL_DATABASE: "monitor_db"
+      TZ: "Asia/Ho_Chi_Minh" # <-- Sửa múi giờ cho database
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - monitor_net
+
+  # 2. Cơ sở dữ liệu chuỗi thời gian InfluxDB (Lưu lịch sử vẽ biểu đồ)
+  influxdb:
+    image: influxdb:2.7
+    container_name: monitor_influxdb
+    restart: always
+    environment:
+      - TZ=Asia/Ho_Chi_Minh # <-- Sửa múi giờ cho InfluxDB để lưu biểu đồ chuẩn giờ VN
+    ports:
+      - "8086:8086"
+    volumes:
+      - influxdb_data:/var/lib/influxdb2
+    networks:
+      - monitor_net
+
+  # 3. Công cụ quản lý luồng dữ liệu Node-RED (Đã cấu hình DNS Google)
+  nodered:
+    image: nodered/node-red:latest
+    container_name: monitor_nodered
+    dns:
+      - 8.8.8.8
+    restart: always
+    environment:
+      - TZ=Asia/Ho_Chi_Minh # <-- Gốc rễ sửa lỗi lệch 7 tiếng bắn tin Telegram của bạn ở đây!
+    ports:
+      - "1880:1880"
+    volumes:
+      - nodered_data:/data
+    depends_on:
+      - mariadb
+      - influxdb
+    networks:
+      - monitor_net
+
+  # 4. Giao diện quản trị trực quan Grafana
+  grafana:
+    image: grafana/grafana:latest
+    container_name: monitor_grafana
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - TZ=Asia/Ho_Chi_Minh # <-- Sửa múi giờ cho giao diện dashboard Grafana
+      - GF_SECURITY_ALLOW_EMBEDDING=true
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - influxdb
+    networks:
+      - monitor_net
+
+  # 5. Backend Flask API (Build từ mã nguồn sạch trong thư mục myapi)
+  flask_api:
+    build: ./myapi
+    container_name: monitor_flask_api
+    restart: always
+    environment:
+      - TZ=Asia/Ho_Chi_Minh # <-- Sửa múi giờ cho logic Backend Flask
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mariadb
+    networks:
+      - monitor_net
+
+  # 6. Web Server Nginx hiển thị giao diện Frontend (Cổng 80)
+  webserver:
+    image: nginx:alpine
+    container_name: monitor_webserver
+    restart: always
+    environment:
+      - TZ=Asia/Ho_Chi_Minh # <-- Sửa múi giờ cho log của Web server Nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html
+    depends_on:
+      - flask_api
+    networks:
+      - monitor_net
