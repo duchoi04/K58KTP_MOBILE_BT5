@@ -226,6 +226,130 @@ Telegram Bot cứ mỗi 5 giây lại gửi tin nhắn về:
 <img width="1179" height="2556" alt="image" src="https://github.com/user-attachments/assets/a38b0bbf-7bb9-46aa-8068-116f7af77b6b" />
 
 
+PHẦN VI: QUẢN TRỊ DEVOPS – CONTAINER PIPELINE BACKUP & RESTORE
+
+BƯỚC 1: XUẤT CONTAINER RA FILE NÉN (BACKUP)
+
+ Tạo Image cục bộ từ Container Node-RED đang chạy:
+ 
+ 
+docker commit monitor_nodered nodered_btl_backup
+
+
+<img width="896" height="69" alt="Screenshot 2026-06-10 024038" src="https://github.com/user-attachments/assets/53fb3cf0-8da8-427d-beef-29a23c8bebd1" />
+
+
+
+Nén Image đó thành file vật lý .tar để lưu trữ offline:
+
+
+docker save -o nodered_btl_backup.tar nodered_btl_backup
+
+<img width="896" height="69" alt="Screenshot 2026-06-10 024038" src="https://github.com/user-attachments/assets/2fb4e728-041f-4b87-9256-5371404f83f1" />
+
+
+Kiểm tra file đã tạo thành công: Sử dụng lệnh ls -l để xác nhận file nodered_btl_backup.tar (nặng khoảng 217MB) đã nằm trong thư mục:
+
+
+<img width="928" height="206" alt="Screenshot 2026-06-10 024243" src="https://github.com/user-attachments/assets/8c43838d-2b94-40b6-943c-e2173a64bb85" />
+
+
+BƯỚC 2: PHÁ HỦY HỆ THỐNG (XÓA CONTAINER)
+
+Dừng và xóa sạch toàn bộ các container đang chạy trong dự án:
+
+docker stop $(docker ps -a -q)
+
+docker rm $(docker ps -a -q)
+
+<img width="692" height="583" alt="Screenshot 2026-06-10 024519" src="https://github.com/user-attachments/assets/2269a943-ae93-47ab-9628-92398e977a1c" />
+
+
+BƯỚC 3: KHÔI PHỤC HỆ THỐNG (RESTORE)
+
+Nạp lại Image Node-RED từ file nén .tar vào Docker:
+
+
+<img width="692" height="583" alt="Screenshot 2026-06-10 024519" src="https://github.com/user-attachments/assets/ae9b1c64-c61f-4782-a3ec-870592f0379e" />
+
+
+BƯỚC 4: ĐẨY LÊN GITHUB CÔNG KHAI (DEPLOY CODE)
+
+Khởi tạo Git và chặn file nặng: Tạo file .gitignore để loại bỏ file .tar dung lượng lớn trước khi push:
+
+git init
+echo "nodered_btl_backup.tar" >> .gitignore
+
+Tạo file báo cáo: Gõ nano README.md, dán nội dung báo cáo chuẩn vào rồi lưu lại.
+
+<img width="479" height="74" alt="image" src="https://github.com/user-attachments/assets/55492ec6-4d5c-446a-8b2c-a1394d6b50c4" />
+
+
+Commit mã nguồn: Thêm tất cả file sạch vào hàng đợi và tạo ghi chú:
+
+git add .
+
+git commit -m "Cập nhật file báo cáo README chuẩn 6 services"
+
+
+
+<img width="839" height="364" alt="Screenshot 2026-06-10 025631" src="https://github.com/user-attachments/assets/07f8f010-2a74-48bf-b242-d3bf950ad8c0" />
+
+
+Liên kết và Push lên GitHub: Tạo Personal Access Token trên Web GitHub thay cho mật khẩu, sau đó đẩy code lên:
+
+git remote add origin https://github.com/duchoi04/K58KTP_MOBILE_BT5
+
+git push origin main
+
+
+<img width="673" height="248" alt="Screenshot 2026-06-10 025648" src="https://github.com/user-attachments/assets/5ef7e0f3-4d45-42b0-9285-75165290b9c5" />
+
+
+KẾT QUẢ:
+
+<img width="1917" height="1079" alt="Screenshot 2026-06-10 024707" src="https://github.com/user-attachments/assets/944bd0ae-e72e-4c60-a001-731660eadba0" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
