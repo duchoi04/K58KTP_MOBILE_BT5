@@ -46,3 +46,216 @@ Khi máy chủ Production hoàn toàn bị cô lập mạng mạng ngoại vi, t
 2. **Đóng gói Image:** Sử dụng lệnh `docker save` để nén các Docker Image cần thiết thành file vật lý `.tar`.
    ```bash
    docker save -o monitor_images.tar nodered/node-red:latest mariadb:10.11 influxdb:2.7 grafana/grafana:latest nginx:alpine
+
+
+PHẦN II: KHỞI TẠO HẠ TẦNG DOCKER COMPOSE
+
+Bước 1: Trên Terminal Ubuntu, tạo thư mục dự án:
+
+
+<img width="1920" height="1080" alt="Screenshot 2026-06-08 164318" src="https://github.com/user-attachments/assets/adc4a242-25e9-46d7-bf36-a029fc34db33" />
+
+
+
+Bước 2: 
+
+Tạo file docker-compose.yml:
+
+<img width="1920" height="1080" alt="Screenshot 2026-06-08 164327" src="https://github.com/user-attachments/assets/d3ebb890-1da8-459b-bd40-9a190c8ec0fa" />
+
+Tạo file requirements.txt:
+
+
+<img width="1110" height="637" alt="Screenshot 2026-06-08 164508" src="https://github.com/user-attachments/assets/8b769f59-d0d6-4e5a-a9dc-5f7fe656e548" />
+
+Tạo file app.py:
+
+
+<img width="1920" height="1080" alt="Screenshot 2026-06-08 164655" src="https://github.com/user-attachments/assets/95566718-5fe9-4cd8-b889-7944fe9ebf57" />
+
+
+Tạo file Docker file:
+
+
+<img width="1108" height="643" alt="Screenshot 2026-06-08 164805" src="https://github.com/user-attachments/assets/809cc249-d9fb-412c-90a8-efe23af2688d" />
+
+
+Tạo file index.html:
+
+
+<img width="1920" height="1080" alt="Screenshot 2026-06-08 164910" src="https://github.com/user-attachments/assets/0f4ec32e-5077-407d-be8d-739af92d1a41" />
+
+
+
+<img width="1655" height="686" alt="Screenshot 2026-06-08 173709" src="https://github.com/user-attachments/assets/3c9d05ce-529d-43f3-84fe-36f05e508cdf" />
+
+
+Bước 3: Khởi chạy hệ thống: docker compose up -d
+
+
+<img width="1655" height="686" alt="Screenshot 2026-06-08 173709" src="https://github.com/user-attachments/assets/ad09b286-2e43-4e3a-96fe-6712a8608c0b" />
+
+ 
+PHẦN III: THIẾT LẬP TELEGRAM BOT API , Grana & Web Hệ thống giám sát biến động dữ liệu động theo thời gian thực
+
+1. THIẾT LẬP TELEGRAM BOT API
+
+  Truy cập @BotFather gửi lệnh /newbot tạo Bot Duchoi Bot rồi Lấy mã Token: 
+
+
+<img width="1179" height="2556" alt="image" src="https://github.com/user-attachments/assets/34937b2b-91d9-487d-82d5-7d42c561f084" />
+
+  Tạo nhóm chat "Hệ Thống Cảnh Báo Realtime BTL", thêm Bot vào nhóm và cấp quyền Admin:
+
+<img width="1179" height="2556" alt="image" src="https://github.com/user-attachments/assets/238dc2be-00f4-41cb-8251-b89542cf0cb0" />
+
+
+<img width="1179" height="2556" alt="image" src="https://github.com/user-attachments/assets/c8099307-8722-4b8f-a790-a23f90abcc96" />
+
+   Lấy mã Chat ID của nhóm qua Telegram Web: 
+
+     Mã nhóm của em sau dấu #
+
+<img width="1072" height="241" alt="Screenshot 2026-06-10 012940" src="https://github.com/user-attachments/assets/527eb043-cf93-4625-9df4-c945d6cdd489" />
+
+2. Grafana
+
+Đăng nhập theo đường link 192.168.1.125:3000 sẽ hiện ra trang Grafana:
+
+<img width="1920" height="1080" alt="Screenshot 2026-06-10 015039" src="https://github.com/user-attachments/assets/652f2b46-f3df-455f-abab-9dc5fecc293a" />
+
+
+Bấm vaaof thanh menu trên cùng bên trái và bấm vào Connections sau đó bấm View configured data sources rồi chọn lnfluxDB rồi cấu hình như trong ảnh cuối cùng bấm Save & test:
+
+<img width="1291" height="956" alt="Screenshot 2026-06-10 015131" src="https://github.com/user-attachments/assets/c78a935a-38ec-4502-849d-29672c63b9cd" />
+
+
+<img width="1293" height="970" alt="Screenshot 2026-06-10 015312" src="https://github.com/user-attachments/assets/3e204461-2d77-4b38-8672-9ef0b092a7ea" />
+
+
+<img width="1285" height="967" alt="Screenshot 2026-06-10 015527" src="https://github.com/user-attachments/assets/92af35cf-7c92-4b0c-a133-fdd1c2d790c3" />
+
+
+<img width="1920" height="1080" alt="Screenshot 2026-06-10 015602" src="https://github.com/user-attachments/assets/4e53e536-1085-4650-9b31-d489090c4124" />
+
+
+Tiếp theo bấm quay trở lại thanh menu chọn Dashboards tạo new Dashboards :
+
+<img width="1297" height="821" alt="Screenshot 2026-06-10 015853" src="https://github.com/user-attachments/assets/a8057ef1-e4a8-4406-aec2-9a756092c914" />
+
+
+<img width="1287" height="784" alt="Screenshot 2026-06-10 015949" src="https://github.com/user-attachments/assets/1609d73b-27d3-4cc0-83e7-f94e1002f253" />
+
+
+Sau khi tạo xong dán code vào và chạy biểu đồ sẽ hiện ra:
+
+<img width="1449" height="919" alt="Screenshot 2026-06-10 020031" src="https://github.com/user-attachments/assets/ff9a070d-efb5-49f5-8cdd-b4f9dfd7e202" />
+
+
+
+3. Web Hệ thống giám sát biến động dữ liệu động theo thời gian thực
+   
+Sau khi tạo xong Grafana truy cập trang web với đường link : 192.168.1.125 sẽ thấy biểu đồ của Grafana hiện ra
+
+
+<img width="1920" height="1080" alt="Screenshot 2026-06-09 161134" src="https://github.com/user-attachments/assets/e641523f-37df-4bfb-8233-1c59089e5c4f" />
+
+
+
+PHẦN IV: XÂY DỰNG LUỒNG DỮ LIỆU TRÊN NODE-RED
+
+1. Truy cập http://192.168.1.125:1880 vào phần menu bên góc phải màn hình chọn phần important dán đoạn code vào sẽ hiện ra giao diện Node Red như bên dưới.Vào Manage palette cài đặt gói thư viện mở rộng: node-red-contrib-telegrambot.
+
+
+<img width="1920" height="1080" alt="Screenshot 2026-06-10 000021" src="https://github.com/user-attachments/assets/c0e3d3fa-296f-46db-a131-552352894a3e" />
+
+
+<img width="1415" height="901" alt="Screenshot 2026-06-10 013201" src="https://github.com/user-attachments/assets/c10aa070-04e1-4d3c-a8aa-8abe5ef55ae4" />
+
+
+2.  Cấu hình của các Node Red trong hình:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
