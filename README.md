@@ -175,6 +175,97 @@ PHẦN IV: XÂY DỰNG LUỒNG DỮ LIỆU TRÊN NODE-RED
 
 2.  Cấu hình của các Node Red trong hình:
 
+Lấy giá Bitcoin: 
+
+<img width="493" height="758" alt="Screenshot 2026-06-10 014225" src="https://github.com/user-attachments/assets/abcabe4a-8da4-41dc-8d9a-1097db962d8d" />
+
+Phân tích và Kiểm tra ngưỡng:
+
+
+<img width="582" height="761" alt="Screenshot 2026-06-10 014310" src="https://github.com/user-attachments/assets/e0d1aada-4eed-4888-99e6-fecb135e1131" />
+
+
+MariaDB:
+
+<img width="522" height="688" alt="Screenshot 2026-06-10 014131" src="https://github.com/user-attachments/assets/d5494091-1342-4693-a60c-824d73e85487" />
+
+
+
+Fomat lnfluxDB:
+
+
+<img width="634" height="804" alt="Screenshot 2026-06-10 014401" src="https://github.com/user-attachments/assets/ab34995f-f1c5-4041-9834-3cb7e5041271" />
+
+
+Tạo tin nhắn Alert:
+
+
+<img width="627" height="896" alt="Screenshot 2026-06-10 013421" src="https://github.com/user-attachments/assets/1009dcde-7e8c-4c25-be6d-7c7354d02aad" />
+
+
+Telegram sender:
+
+
+<img width="689" height="837" alt="Screenshot 2026-06-10 013538" src="https://github.com/user-attachments/assets/8fe0f271-11ec-402a-8ed1-d398ffa60d84" />
+
+
+PHẦN V: KẾT QUẢ
+
+Hệ thống giám sát thông số và cảnh báo thời gian thực:
+
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/0f104535-5cff-4abb-b2d1-3ea07a686f8f" />
+
+
+Telegram Bot cứ mỗi 5 giây lại gửi tin nhắn về:
+
+
+<img width="1179" height="2556" alt="image" src="https://github.com/user-attachments/assets/053b2f21-e159-4280-87e4-d81e7a92944d" />
+
+
+<img width="1179" height="2556" alt="image" src="https://github.com/user-attachments/assets/a38b0bbf-7bb9-46aa-8068-116f7af77b6b" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
