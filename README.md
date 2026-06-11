@@ -1,3 +1,8 @@
+môn: phát triển ứng dụng với mã nguồn mở - tee0421
+
+BÀI TẬP 5
+
+
 # App Monitor + Alert Data Realtime (Multi-Services Architecture)
 
 Hệ thống giám sát biến động dữ liệu động theo thời gian thực (Realtime Data Pipeline) sử dụng cấu trúc đa dịch vụ (Multi-services) triển khai trên nền tảng Docker Compose, Node-RED, Backend Flask, Frontend Nginx và hệ thống cảnh báo tự động qua Telegram Bot API.
